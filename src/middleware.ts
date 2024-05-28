@@ -4,6 +4,7 @@ export default function middleware(request: NextRequest) {
     const token = request.cookies.get("auth_token")?.value
 
     const signInUrl = new URL("/", request.url)
+    const dashboardUrl = new URL("/dashboard", request.url)
 
     if(!token) {
 
@@ -12,6 +13,10 @@ export default function middleware(request: NextRequest) {
         }
 
         return NextResponse.redirect(signInUrl)
+    }
+
+    if(request.nextUrl.pathname === "/"){
+        return NextResponse.redirect(dashboardUrl)
     }
 }
 
